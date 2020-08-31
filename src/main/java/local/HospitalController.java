@@ -11,50 +11,45 @@ import java.util.Optional;
 @RestController
 public class HospitalController {
 
- @Autowired
- HospitalRepository hospitalRepository;
-
- @PutMapping("/hospitals/{hospitalId}")
- void decreasePcnt(@PathVariable(value = "hospitalId") Long hospitalId) {
-  try {
-   Thread.sleep(500);
-  } catch (InterruptedException e) {
-   e.printStackTrace();
-  }
-  Optional<Hospital> a = hospitalRepository.findById(hospitalId);
-
-  if(a.isPresent()) {
-   Hospital b = a.get();
-   b.setPCnt(b.getPCnt()-1);
-   hospitalRepository.save(b);
-
-  }
-
- }
-
- @PostMapping("/hospitals")
- void hospitalInsert(@RequestBody Hospital data) {
-  System.out.println(data);
-  hospitalRepository.save(data);
-
- }
+    @Autowired
+    HospitalRepository hospitalRepository;
 
 
- @GetMapping("/hospitals/{hospitalId}")
- Hospital hospitalInfoCheck(@PathVariable(value = "hospitalId") Long hospitalId) {
-  System.out.println("productStockCheck call");
+    @PostMapping("/hospitals")
+    void hospitalInsert(@RequestBody Hospital data) {
+        hospitalRepository.save(data);
+    }
+
+    @PutMapping("/hospitals/{hospitalId}")
+    void decreasePcnt(@PathVariable(value = "hospitalId") Long hospitalId) {
+
+        Optional<Hospital> a = hospitalRepository.findById(hospitalId);
+        if (a.isPresent()) {
+            Hospital b = a.get();
+            b.setPCnt(b.getPCnt() - 1);
+            hospitalRepository.save(b);
+        }
+    }
 
 
-  Optional<Hospital> a = hospitalRepository.findById(hospitalId);
-  return a.get();
- }
+    @GetMapping("/hospitals")
+    Iterable<Hospital> getHospitalList() {
+        Iterable<Hospital> result = hospitalRepository.findAll();
+        return result;
+    }
+
+    @GetMapping("/hospitals/{hospitalId}")
+    Hospital getHospitalById(@PathVariable(value = "hospitalId") Long hospitalId) {
+        System.out.println("productStockCheck call");
+        Optional<Hospital> a = hospitalRepository.findById(hospitalId);
+        return a.get();
+    }
 
 
+    @DeleteMapping("/hospitals/{hospitalId}")
+    void hospitalDelete(@PathVariable(value = "hospitalId") Long hospitalId) {
+        hospitalRepository.deleteById(hospitalId);
 
- @DeleteMapping("/hospitals/{hospitalId}")
- void hospitalDelete(@PathVariable(value = "hospitalId") Long hospitalId) {
-  hospitalRepository.deleteById(hospitalId);
-
- }
+    }
 
 }
