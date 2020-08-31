@@ -1,0 +1,14 @@
+local\AbstractEvent$1.class
+local\config\kafka\KafkaProcessor.class
+local\Hospital.class
+local\ScreeningRequested.class
+local\HospitalDeleted.class
+local\HospitalManageApplication.class
+local\HospitalChanged.class
+local\HospitalRepository.class
+local\AbstractEvent.class
+local\HospitalRegistered.class
+local\PolicyHandler.class
+local\HospitalController.class
+local\Canceled.class
+local\ScreeningCanceld.class
